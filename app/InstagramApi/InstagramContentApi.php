@@ -9,7 +9,10 @@
 namespace App\InstagramApi;
 
 
+use function foo\func;
 use GuzzleHttp\Client;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 
 class InstagramContentApi {
 
@@ -29,12 +32,13 @@ class InstagramContentApi {
 
     public function getTrendingPostsByHashtag($hashtag) {
         $trending = $this->crawler->explore($hashtag)->getTrending();
-        $posts = array_map(function ($post){
-            return $this->crawlDetails($post);
-        }, $trending);
+        $shorcodes = Collection::make(Arr::pluck($trending, "node.shortcode"));
+        $crawled = $shorcodes->map(function($shortcode){
+            return $this->crawlDetails($shortcode);
+        });
     }
 
-    private function crawlDetails($post) {
-        return $this->crawler->post($post->node->shortcode);
+    private function crawlDetails($shortcode) {
+        return $this->crawler->post($shortcode);
     }
 }

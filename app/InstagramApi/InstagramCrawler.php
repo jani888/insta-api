@@ -22,19 +22,28 @@ class InstagramCrawler {
 
     /**
      * InstagramContentApi constructor.
+     *
+     * @param Client $client
      */
     public function __construct(Client $client) {
         $this->client = $client;
     }
 
-    public function post($shortcode) {
+    public function post($shortcode): InstagramPostPage {
         $html = $this->client->get(self::BASE_URL . 'p/' . $shortcode)->getBody()->getContents();
         $page = $this->parsePost($html);
         return $page;
     }
 
-    private function parsePost(string $html) {
+    private function parsePost(string $html): InstagramPostPage {
         return new InstagramPostPage($this->getSharedData($html));
+    }
+
+    private function getSharedData(string $html) {
+        $start = strpos($html, "window._sharedData = ");
+        $end = strpos($html, ";", $start);
+        $start += strlen("window._sharedData = ");
+        return json_decode(substr($html, $start, $end - $start));
     }
 
     public function explore($hashtag): InstagramExplorePage {
@@ -45,12 +54,5 @@ class InstagramCrawler {
 
     private function parseExplore(string $html): InstagramExplorePage {
         return new InstagramExplorePage($this->getSharedData($html));
-    }
-
-    private function getSharedData(string $html) {
-        $start = strpos($html, "window._sharedData = ");
-        $end = strpos($html, ";", $start);
-        $start += strlen("window._sharedData = ");
-        return json_decode(substr($html, $start, $end - $start));
     }
 }
