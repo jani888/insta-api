@@ -17,4 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/content/{hashtag}', 'Api/ContentController@get');
+Route::get('/content/{hashtag}', 'Api\ContentController@get');
