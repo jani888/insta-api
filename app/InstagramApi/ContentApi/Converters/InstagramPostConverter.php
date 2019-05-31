@@ -18,22 +18,30 @@ class InstagramPostConverter {
     protected $instagramAccountConverter;
 
     /**
+     * @var InstagramDescriptionConverter
+     */
+    private $descriptionConverter;
+
+    /**
      * InstagramPostConverter constructor.
      *
-     * @param InstagramAccountConverter $instagramAccountConverter
+     * @param InstagramAccountConverter     $instagramAccountConverter
+     * @param InstagramDescriptionConverter $descriptionConverter
      */
-    public function __construct(InstagramAccountConverter $instagramAccountConverter) {
+    public function __construct(InstagramAccountConverter $instagramAccountConverter, InstagramDescriptionConverter $descriptionConverter) {
         $this->instagramAccountConverter = $instagramAccountConverter;
+        $this->descriptionConverter = $descriptionConverter;
     }
 
 
     public function convert(InstagramPostPage $page) {
         //Létrehozza a Post-ot, commenteket, menti az usert
-        Post::create([
+        $post = Post::create([
             'likes'                => $page->getLikes(),
             'description'          => $page->getDescription(),
             'shortcode'            => $page->getShortcode(),
             'instagram_account_id' => $this->instagramAccountConverter->convert($page->getOwner())->id,
         ]);
+        $this->descriptionConverter->convert($post, $page->getDescription());
     }
 }

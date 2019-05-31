@@ -6,9 +6,9 @@
  * Time: 19:56
  */
 
-namespace App\InstagramApi\PublishingApi;
+namespace App\InstagramApi\PublishingApi\Vendor;
 
-class Test{
+class InstagramUploadApi{
     private $username;
     private $password;
     private $csrftoken;
@@ -35,7 +35,7 @@ class Test{
         $this->headers[] = "X-IG-Capabilities: ".$this->x_ig_capabilities;
         $this->headers[] = "X-IG-Connection-Type: WIFI";
     }
-    public function Login($username="", $password=""){
+    public function authenticate($username="", $password=""){
         $this->username = $username;
         $this->password = $password;
         $this->csrftoken = $this->GetToken();
@@ -43,9 +43,9 @@ class Test{
         $this->uid = $arrUidAndCooike[0];
         $this->cookies = $arrUidAndCooike[1];
     }
-    public function UploadPhoto($image, $caption){
+    public function publishPost($image, $description){
         $this->UploadPhotoApi($image);
-        $this->ConfigPhotoApi($caption);
+        $this->ConfigPhotoApi($description);
     }
     public function UploadVideo($video, $image, $caption){
         $this->UploadVideoApi($video);
