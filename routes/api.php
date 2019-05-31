@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/content/{hashtag}', 'Api\ContentController@get');
+Route::get('/publish', 'Api\ContentController@post');
