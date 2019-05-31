@@ -11,6 +11,7 @@ namespace App\InstagramApi\PublishingApi;
 
 use Facebook\WebDriver\Chrome\ChromeOptions;
 use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\LocalFileDetector;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\WebDriverBy;
 use Laravel\Dusk\Browser;
@@ -48,7 +49,7 @@ class InstagramPublishingApi {
     public function post() {
         if(!$this->authenticated) throw new \RuntimeException('Not authenticated!');
         //$this->browser->waitForText("Bekapcsolás")->driver->findElement(WebDriverBy::xpath("//button[text()='Bekapcsolás']"))->click();
-        $this->browser->driver->
+        $this->browser->pause(3000)->driver->findElement(WebDriverBy::className('tb_sK'))->setFileDetector(new LocalFileDetector())->sendKeys(storage_path('kep.png'))->submit();
     }
 
     private function login($username, $password) {
