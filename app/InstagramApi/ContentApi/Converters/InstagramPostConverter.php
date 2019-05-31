@@ -43,5 +43,6 @@ class InstagramPostConverter {
             'instagram_account_id' => $this->instagramAccountConverter->convert($page->getOwner())->id,
         ]);
         $this->descriptionConverter->convert($post, $page->getDescription());
+        return $post;
     }
 }
