@@ -6,7 +6,7 @@
  * Time: 23:24
  */
 
-namespace App\InstagramApi;
+namespace App\InstagramApi\ContentApi\Pages;
 
 
 class InstagramExplorePage {

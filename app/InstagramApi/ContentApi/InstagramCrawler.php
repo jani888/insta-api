@@ -6,9 +6,11 @@
  * Time: 14:56
  */
 
-namespace App\InstagramApi;
+namespace App\InstagramApi\ContentApi;
 
 
+use App\InstagramApi\ContentApi\Pages\InstagramExplorePage;
+use App\InstagramApi\ContentApi\Pages\InstagramPostPage;
 use GuzzleHttp\Client;
 
 class InstagramCrawler {
@@ -41,9 +43,9 @@ class InstagramCrawler {
 
     private function getSharedData(string $html) {
         $start = strpos($html, "window._sharedData = ");
-        $end = strpos($html, ";", $start);
+        $end = strpos($html, "};", $start);
         $start += strlen("window._sharedData = ");
-        return json_decode(substr($html, $start, $end - $start));
+        return json_decode(substr($html, $start, $end - $start + 1));
     }
 
     public function explore($hashtag): InstagramExplorePage {
