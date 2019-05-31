@@ -100,3 +100,4 @@ fabric.properties
 # End of https://www.gitignore.io/api/phpstorm
 .idea/workspace.xml
 .idea/workspace.xml
+.idea/insta-api.iml

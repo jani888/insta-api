@@ -11,6 +11,7 @@ namespace App\InstagramApi\ContentApi;
 
 use App\InstagramApi\ContentApi\Converters\InstagramPostConverter;
 use App\InstagramApi\ContentApi\Pages\InstagramPostPage;
+use App\Jobs\InstagramCrawlPostDetails;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -39,11 +40,7 @@ class InstagramContentApi {
         $trending = $this->crawler->explore($hashtag)->getTrending();
         $shortcodes = Collection::make(Arr::pluck($trending, "node.shortcode"));
         $shortcodes->each(function ($shortcode) {
-            $this->instagramPostConverter->convert($this->crawlDetails($shortcode));
+            dispatch(new InstagramCrawlPostDetails($shortcode));
         });
-    }
-
-    private function crawlDetails($shortcode):InstagramPostPage {
-        return $this->crawler->post($shortcode);
     }
 }
