@@ -11,8 +11,8 @@ namespace App\InstagramApi\ContentApi\Converters;
 
 use App\Models\Post;
 
-class InstagramDescriptionConverter {
-    public function convert(Post $post, $description) {
+class InstagramHashtagParser {
+    public function parse(Post $post) {
 
     }
 }

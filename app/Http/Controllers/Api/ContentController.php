@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
+use App\InstagramApi\ContentApi\Converters\InstagramHashtagParser;
 use App\InstagramApi\ContentApi\InstagramContentApi;
 use App\InstagramApi\PublishingApi\InstagramPublishingApi;
 use Illuminate\Http\Request;
@@ -17,5 +18,9 @@ class ContentController extends Controller {
 
     public function post(InstagramPublishingApi $publishingApi) {
         $publishingApi->authenticate("janikahidvegi1234", "almafa1234")->post(storage_path("alma.jpg"), "test");
+    }
+
+    public function hashtag(InstagramHashtagParser $hashtagParser){
+        $hashtagParser->parse(Post::first);
     }
 }
