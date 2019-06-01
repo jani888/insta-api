@@ -20,7 +20,7 @@ class InstagramPostConverter {
     /**
      * @var InstagramHashtagParser
      */
-    private $descriptionConverter;
+    private $hashtagParser;
 
     /**
      * InstagramPostConverter constructor.
@@ -30,7 +30,7 @@ class InstagramPostConverter {
      */
     public function __construct(InstagramAccountConverter $instagramAccountConverter, InstagramHashtagParser $descriptionConverter) {
         $this->instagramAccountConverter = $instagramAccountConverter;
-        $this->descriptionConverter = $descriptionConverter;
+        $this->hashtagParser = $descriptionConverter;
     }
 
 
@@ -42,6 +42,6 @@ class InstagramPostConverter {
             'shortcode'            => $page->getShortcode(),
             'instagram_account_id' => $this->instagramAccountConverter->convert($page->getOwner())->id,
         ]);
-        $this->descriptionConverter->parse($post);
+        $this->hashtagParser->parse($post);
     }
 }
