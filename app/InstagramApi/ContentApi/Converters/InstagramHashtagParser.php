@@ -14,7 +14,6 @@ use Illuminate\Support\Collection;
 
 class InstagramHashtagParser {
     public function parse(Post $post) {
-        dump($post->description);
         $hashtags = Collection::make(explode("#", $post->description));
 
         $hashtags->shift();

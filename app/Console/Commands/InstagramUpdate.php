@@ -12,7 +12,7 @@ class InstagramUpdate extends Command
      *
      * @var string
      */
-    protected $signature = 'instagram:update';
+    protected $signature = 'instagram:update {hashtags*}';
 
     /**
      * The console command description.
@@ -38,9 +38,10 @@ class InstagramUpdate extends Command
      */
     public function handle()
     {
-        $hashtags = collect(['car', 'cars', 'sportscar', 'supercar', 'instacar', 'instacars', 'lamborghini', 'ferrari', 'tesla']);
+        $hashtags = collect($this->argument('hashtags'));
         $hashtags->each(function ($hashtag){
-            dispatch(new InstagramCrawlHashtag($hashtag));
+            $this->info("Updating {$hashtag}...");
+            dispatch_now(new InstagramCrawlHashtag($hashtag));
         });
     }
 }
