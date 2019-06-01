@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('likes');
             $table->text('description');
+            $table->text('img_src');
             $table->unsignedBigInteger('instagram_account_id');
             $table->text('shortcode');
             $table->timestamps();

@@ -10,12 +10,9 @@ namespace App\InstagramApi\PublishingApi;
 
 
 use App\InstagramApi\PublishingApi\Vendor\InstagramUploadApi;
-use Facebook\WebDriver\Chrome\ChromeOptions;
-use Facebook\WebDriver\Remote\DesiredCapabilities;
-use Facebook\WebDriver\Remote\LocalFileDetector;
-use Facebook\WebDriver\Remote\RemoteWebDriver;
-use Facebook\WebDriver\WebDriverBy;
-use Faker\Generator;
+use App\InstagramApi\PublishingApi\Vendor\InstagramUploadApi2;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Laravel\Dusk\Browser;
 
 class InstagramPublishingApi {
@@ -49,8 +46,53 @@ class InstagramPublishingApi {
     }
 
     public function post($file, $description) {
-        if(!$this->authenticated) throw new \RuntimeException('Not authenticated!');
-        $this->uploadApi->publishPost($file, $description);
+        //$this->makeImageSquare($file);
+
+        if (!$this->authenticated) throw new \RuntimeException('Not authenticated!');
+        $this->uploadApi->publishPost(storage_path('app/' . $file), $description);
+    }
+
+    private function makeImageSquare($file) {
+        $img = Image::make(storage_path( 'app/' . $file));
+
+        $width = $img->width();
+        $height = $img->height();
+
+
+        /*
+        *  canvas
+        */
+        $dimension = 2362;
+
+        $vertical = (($width < $height) ? true : false);
+        $horizontal = (($width > $height) ? true : false);
+        $square = (($width = $height) ? true : false);
+
+        if ($vertical) {
+            $top = $bottom = 245;
+            $newHeight = ($dimension) - ($bottom + $top);
+            $img->resize(null, $newHeight, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+        } else if ($horizontal) {
+            $right = $left = 245;
+            $newWidth = ($dimension) - ($right + $left);
+            $img->resize($newWidth, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+        } else if ($square) {
+            $right = $left = 245;
+            $newWidth = ($dimension) - ($left + $right);
+            $img->resize($newWidth, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+
+        }
+
+        $img->resizeCanvas($dimension, $dimension, 'center', false, '#ffffff');
+        return Storage::put($file, (string) $img->encode());
     }
 
 }

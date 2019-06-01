@@ -41,4 +41,8 @@ class InstagramPostPage {
         return $this->postData->shortcode;
     }
 
+    public function getImageSource() {
+        return $this->postData->display_url;
+    }
+
 }

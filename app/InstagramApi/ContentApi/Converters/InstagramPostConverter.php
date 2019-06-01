@@ -11,6 +11,7 @@ namespace App\InstagramApi\ContentApi\Converters;
 
 use App\InstagramApi\ContentApi\Pages\InstagramPostPage;
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 
 class InstagramPostConverter {
 
@@ -25,8 +26,8 @@ class InstagramPostConverter {
     /**
      * InstagramPostConverter constructor.
      *
-     * @param InstagramAccountConverter     $instagramAccountConverter
-     * @param InstagramHashtagParser $descriptionConverter
+     * @param InstagramAccountConverter $instagramAccountConverter
+     * @param InstagramHashtagParser    $descriptionConverter
      */
     public function __construct(InstagramAccountConverter $instagramAccountConverter, InstagramHashtagParser $descriptionConverter) {
         $this->instagramAccountConverter = $instagramAccountConverter;
@@ -35,13 +36,22 @@ class InstagramPostConverter {
 
 
     public function convert(InstagramPostPage $page) {
+        if(Post::where('shortcode', $page->getShortcode())->count() > 0) return;
         //Létrehozza a Post-ot, commenteket, menti az usert
         $post = Post::create([
             'likes'                => $page->getLikes(),
             'description'          => $page->getDescription(),
             'shortcode'            => $page->getShortcode(),
+            'img_src'              => $page->getImageSource(),
             'instagram_account_id' => $this->instagramAccountConverter->convert($page->getOwner())->id,
         ]);
+        $this->getImage($post, $post->img_src);
         $this->descriptionConverter->parse($post);
+        return $post;
+    }
+
+    private function getImage(Post $post, $img_src) {
+        $image = file_get_contents($img_src);
+        Storage::put(sprintf("post_image_data/%s.jpg", $post->id), $image);
     }
 }

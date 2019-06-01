@@ -10,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Artisan;
 
 class InstagramCrawlPostDetails implements ShouldQueue
 {
@@ -38,6 +39,8 @@ class InstagramCrawlPostDetails implements ShouldQueue
      */
     public function handle(InstagramPostConverter $postConverter, InstagramCrawler $crawler)
     {
-        $postConverter->convert($crawler->post($this->shortcode));
+        $post = $postConverter->convert($crawler->post($this->shortcode));
+        if($post == null) return;
+        Artisan::call("instagram:repost {$post->id}");
     }
 }

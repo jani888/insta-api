@@ -8,6 +8,8 @@
 
 namespace App\InstagramApi\PublishingApi\Vendor;
 
+use http\Exception\RuntimeException;
+
 class InstagramUploadApi{
     private $username;
     private $password;
@@ -133,8 +135,7 @@ class InstagramUploadApi{
         if($arrResult['status'] == "ok"){
             return true;
         }else{
-            print $result;
-            exit;
+            throw new \RuntimeException($result);
         }
     }
     private function UploadVideoApi($file){
@@ -181,8 +182,7 @@ class InstagramUploadApi{
         if($arrResult['status'] == "ok"){
             return true;
         }else{
-            print $result;
-            exit;
+            throw new \RuntimeException($result);
         }
     }
     private function ConfigPhotoApi($caption){
@@ -217,8 +217,7 @@ class InstagramUploadApi{
         if($arrResult['status'] == "ok"){
             return true;
         }else{
-            print $result;
-            exit;
+            throw new \RuntimeException($result);
         }
     }
     private function ConfigVideoApi($caption){
@@ -257,8 +256,7 @@ class InstagramUploadApi{
         if($arrResult['status'] == "ok"){
             return true;
         }else{
-            print $result;
-            exit;
+            throw new \RuntimeException($result);
         }
     }
     private function generateUUID(){
