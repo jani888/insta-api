@@ -25,8 +25,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/schedule', 'ScheduleController@enqueue');
 
     Route::resource('user', 'UserController', ['except' => ['show']]);
+
+	Route::resource('accounts', 'InstagramAcountController', ['as' => 'accounts.create', 'except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
 });
-
