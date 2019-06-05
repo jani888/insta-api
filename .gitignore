@@ -101,3 +101,6 @@ fabric.properties
 .idea/workspace.xml
 .idea/workspace.xml
 .idea/insta-api.iml
+
+.idea
+*.xml

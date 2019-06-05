@@ -41,7 +41,7 @@ class InstagramRepost extends Command {
      * @return mixed
      */
     public function handle(InstagramPublishingApi $publishingApi) {
-        sleep(5);
+        sleep(40);
         $tags = Arr::random([
             "#cars #car #bmw #carsofinstagram #carporn #auto #supercars #luxury #mercedes #carlifestyle #porsche #ferrari #audi #photography #supercar #instacar #jdm #racing #carswithoutlimits #s #lamborghini #turbo #ford #m #r #like #nissan #f #speed #bhfyp",
             "#mk #luxurycars #instacars #automotive #v #amg #toyota #e #gt #sportscar #follow #rs #drive #honda #instagood #bhfyp #stance #bmwm #cargram #race #instagram #exoticcars #carstagram #vw #carphotography #amazingcars #wheels #volkswagen #x #drift",
