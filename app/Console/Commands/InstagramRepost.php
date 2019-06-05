@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\InstagramApi\PublishingApi\InstagramPublishingApi;
-use App\Models\Post;
+use App\Models\InstagramPost;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
@@ -47,7 +47,7 @@ class InstagramRepost extends Command {
             "#mk #luxurycars #instacars #automotive #v #amg #toyota #e #gt #sportscar #follow #rs #drive #honda #instagood #bhfyp #stance #bmwm #cargram #race #instagram #exoticcars #carstagram #vw #carphotography #amazingcars #wheels #volkswagen #x #drift",
         ]);
         try {
-            $post = Post::find($this->argument('postID'));
+            $post = InstagramPost::find($this->argument('postID'));
             dump("[" . Carbon::now()->format('Y-m-d H:i:s') . "] " . "Reposting {$post->id}...");
             $publishingApi->authenticate("thebestcarsinthe.world", "almafa1234")->post(sprintf("post_image_data/%s.jpg", $post->id), $tags);
             dump("[" . Carbon::now()->format('Y-m-d H:i:s') . "] " . "Success!");

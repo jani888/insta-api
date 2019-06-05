@@ -10,7 +10,7 @@ namespace App\InstagramApi\ContentApi\Converters;
 
 
 use App\InstagramApi\ContentApi\Pages\InstagramPostPage;
-use App\Models\Post;
+use App\Models\InstagramPost;
 use Illuminate\Support\Facades\Storage;
 
 class InstagramPostConverter {
@@ -36,9 +36,9 @@ class InstagramPostConverter {
 
 
     public function convert(InstagramPostPage $page) {
-        if(Post::where('shortcode', $page->getShortcode())->count() > 0) return;
+        if(InstagramPost::where('shortcode', $page->getShortcode())->count() > 0) return;
         //Létrehozza a Post-ot, commenteket, menti az usert
-        $post = Post::create([
+        $post = InstagramPost::create([
             'likes'                => $page->getLikes(),
             'description'          => $page->getDescription(),
             'shortcode'            => $page->getShortcode(),
@@ -50,7 +50,7 @@ class InstagramPostConverter {
         return $post;
     }
 
-    private function getImage(Post $post, $img_src) {
+    private function getImage(InstagramPost $post, $img_src) {
         $image = file_get_contents($img_src);
         Storage::put(sprintf("post_image_data/%s.jpg", $post->id), $image);
     }

@@ -9,11 +9,11 @@
 namespace App\InstagramApi\ContentApi\Converters;
 
 
-use App\Models\Post;
+use App\Models\InstagramPost;
 use Illuminate\Support\Collection;
 
 class InstagramHashtagParser {
-    public function parse(Post $post) {
+    public function parse(InstagramPost $post) {
         $hashtags = Collection::make(explode("#", $post->description));
 
         $hashtags->shift();

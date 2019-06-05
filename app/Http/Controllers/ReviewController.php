@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InstagramAccount;
+use App\Models\InstagramPost;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -23,6 +25,11 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        //todo: Query only the posts to the current account
+        //todo: Add recommendation algorithm to the query
+        //todo: Dont show already scheduled posts
+        $description = "asdfasfasdfasdf";
+        $post = InstagramPost::with('account')->orderBy('created_at', 'DESC')->first();
+        return view('review.index', compact('post', 'description'));
     }
 }
