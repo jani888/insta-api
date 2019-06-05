@@ -41,7 +41,7 @@
                             <tbody>
                                 @foreach ($accounts as $account)
                                     <tr>
-                                        <td>{{ $account->name }}</td>
+                                        <td>{{ $account->username }}</td>
                                         <!--td>
                                             <a href="mailto:{{ $account->email }}">{{ $account->email }}</a>
                                         </td-->
@@ -52,7 +52,7 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </a>
                                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                    <a class="dropdown-item" href="/user/{{ $account->id }}/edit">{{ __('Edit') }}</a>
+                                                    <a class="dropdown-item" href="/accounts/{{ $account->id }}/edit">{{ __('Edit') }}</a>
                                                 </div>
                                             </div>
                                         </td>

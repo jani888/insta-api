@@ -17,6 +17,7 @@ class CreateInstagramAccountsTable extends Migration
             $table->unsignedBigInteger('id')->primary();
             $table->string('username');
             $table->string('full_name');
+            $table->string('password');
             $table->timestamps();
         });
     }

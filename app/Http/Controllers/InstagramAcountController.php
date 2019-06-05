@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Models\InstagramAccount;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,7 +15,7 @@ class InstagramAcountController extends Controller
      * @param  \App\User  $model
      * @return \Illuminate\View\View
      */
-    public function index(User $model)
+    public function index(InstagramAccount $model)
     {
         return view('instagram_acount_management.index', ['accounts' => $model->paginate(15)]);
     }
@@ -36,7 +37,7 @@ class InstagramAcountController extends Controller
      * @param  \App\User  $model
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(UserRequest $request, User $model)
+    public function store(UserRequest $request, InstagramAccount $model)
     {
         $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
 
@@ -49,9 +50,9 @@ class InstagramAcountController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\View\View
      */
-    public function edit(User $user)
+    public function edit(InstagramAccount $account)
     {
-        return view('instagram_acount_management.edit', compact('user'));
+        return view('instagram_acount_management.edit', compact('account'));
     }
 
     /**
@@ -61,9 +62,9 @@ class InstagramAcountController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UserRequest $request, User  $user)
+    public function update(UserRequest $request, InstagramAccount $account)
     {
-        $user->update(
+        $account->update(
             $request->merge(['password' => Hash::make($request->get('password'))])
                 ->except([$request->get('password') ? '' : 'password']
         ));
@@ -77,9 +78,9 @@ class InstagramAcountController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(User  $user)
+    public function destroy(InstagramAccount $account)
     {
-        $user->delete();
+        $account->delete();
 
         return redirect()->route('instagram_acount_management.index')->withStatus(__('User successfully deleted.'));
     }
