@@ -66,6 +66,135 @@
                 </div>
             </div>
             <div class="col-xl-8 order-xl-1">
+                <div class="card bg-secondary shadow mb-4 p-2">
+                    <div class="nav-wrapper">
+                        <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="far fa-chart-bar mr-2"></i>Summary</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-hashtag mr-2"></i>Hashtags</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fas fa-cogs mr-2"></i>Settings</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                <div class="card bg-secondary shadow">
+                                    <div class="card-header bg-white border-0">
+                                        <div class="row align-items-center">
+                                            <h3 class="col-12 mb-0">{{ __('Edit Profile') }}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <form method="post" action="{{ route('profile.update') }}" autocomplete="off">
+                                            @csrf
+                                            @method('put')
+
+                                            <h6 class="heading-small text-muted mb-4">{{ __('User information') }}</h6>
+
+                                            @if (session('status'))
+                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                    {{ session('status') }}
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            @endif
+
+                                            <div class="pl-lg-4">
+                                                <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                                                    <label class="form-control-label" for="input-name">{{ __('Name') }}</label>
+                                                    <input type="text" name="name" id="input-name" class="form-control form-control-alternative{{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required autofocus>
+
+                                                    @if ($errors->has('name'))
+                                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('name') }}</strong>
+                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                                    <label class="form-control-label" for="input-email">{{ __('Email') }}</label>
+                                                    <input type="email" name="email" id="input-email" class="form-control form-control-alternative{{ $errors->has('email') ? ' is-invalid' : '' }}" placeholder="{{ __('Email') }}" value="{{ old('email', auth()->user()->email) }}" required>
+
+                                                    @if ($errors->has('email'))
+                                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                                    @endif
+                                                </div>
+
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-success mt-4">{{ __('Save') }}</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <hr class="my-4" />
+                                        <form method="post" action="{{ route('profile.password') }}" autocomplete="off">
+                                            @csrf
+                                            @method('put')
+
+                                            <h6 class="heading-small text-muted mb-4">{{ __('Password') }}</h6>
+
+                                            @if (session('password_status'))
+                                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                    {{ session('password_status') }}
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                            @endif
+
+                                            <div class="pl-lg-4">
+                                                <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
+                                                    <label class="form-control-label" for="input-current-password">{{ __('Current Password') }}</label>
+                                                    <input type="password" name="old_password" id="input-current-password" class="form-control form-control-alternative{{ $errors->has('old_password') ? ' is-invalid' : '' }}" placeholder="{{ __('Current Password') }}" value="" required>
+
+                                                    @if ($errors->has('old_password'))
+                                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('old_password') }}</strong>
+                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                                                    <label class="form-control-label" for="input-password">{{ __('New Password') }}</label>
+                                                    <input type="password" name="password" id="input-password" class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}" placeholder="{{ __('New Password') }}" value="" required>
+
+                                                    @if ($errors->has('password'))
+                                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('password') }}</strong>
+                                        </span>
+                                                    @endif
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-control-label" for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
+                                                    <input type="password" name="password_confirmation" id="input-password-confirmation" class="form-control form-control-alternative" placeholder="{{ __('Confirm New Password') }}" value="" required>
+                                                </div>
+
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-success mt-4">{{ __('Change password') }}</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                                <p class="description">Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+                            </div>
+                            <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
