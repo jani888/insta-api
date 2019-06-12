@@ -18,6 +18,7 @@ class CreatePostingScheduleTable extends Migration
             $table->dateTime('post_at');
             $table->unsignedBigInteger('post_id')->unique();
             $table->boolean('posted')->default(false);
+            $table->timestamps();
         });
     }
 

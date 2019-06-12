@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Jobs\InstagramCrawlHashtag;
 use Illuminate\Console\Command;
 
-class InstagramUpdate extends Command
+class InstagramUpdateCommand extends Command
 {
     /**
      * The name and signature of the console command.

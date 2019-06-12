@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 
-class InstagramRepost extends Command {
+class InstagramRepostCommand extends Command {
 
     /**
      * The name and signature of the console command.

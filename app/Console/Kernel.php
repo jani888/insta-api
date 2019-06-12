@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('instagram:update')->everyTenMinutes();
 
+        $schedule->command('instagram:post')->everyMinute();
         // $schedule->command('inspire')
         //          ->hourly();
     }

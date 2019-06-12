@@ -40,7 +40,5 @@ class InstagramCrawlPostDetails implements ShouldQueue
     public function handle(InstagramPostConverter $postConverter, InstagramCrawler $crawler)
     {
         $post = $postConverter->convert($crawler->post($this->shortcode));
-        if($post == null) return;
-        Artisan::call("instagram:repost {$post->id}");
     }
 }
