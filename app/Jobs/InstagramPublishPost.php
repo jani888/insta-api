@@ -39,6 +39,12 @@ class InstagramPublishPost implements ShouldQueue
      */
     public function handle(InstagramPublishingApi $publishingApi)
     {
-        $this->scheduled-
+        $username = $this->scheduled->post->account->username;
+        $password = $this->scheduled->post->account->password;
+
+        $publishingApi->authenticate($username, $password)->post(sprintf("post_image_data/%s.jpg", $this->scheduled->post->id), $this->scheduled->description);
+
+        $this->scheduled->posted = true;
+        $this->scheduled->save();
     }
 }

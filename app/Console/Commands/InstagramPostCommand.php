@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\InstagramApi\PublishingApi\InstagramPublishingApi;
+use App\Jobs\InstagramPublishPost;
 use App\Models\PostSchedule;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -39,11 +40,10 @@ class InstagramPostCommand extends Command {
      *
      * @return mixed
      */
-    public function handle(InstagramPublishingApi $publishingApi) {
-        $posts = PostSchedule::where('post_at', '<=', Carbon::now())->get();
-
+    public function handle() {
+        $posts = PostSchedule::with(['post', 'post.account'])->where('post_at', '<', Carbon::now())->get();
         $posts->each(function ($post){
-
+            InstagramPublishPost::dispatch($post);
         });
     }
 }
