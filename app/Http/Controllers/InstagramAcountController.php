@@ -17,7 +17,7 @@ class InstagramAcountController extends Controller
      */
     public function index(InstagramAccount $model)
     {
-        return view('instagram_acount_management.index', ['accounts' => $model->paginate(15)]);
+        return view('instagram_account_management.index', ['accounts' => $model->paginate(15)]);
     }
 
     /**
@@ -27,7 +27,7 @@ class InstagramAcountController extends Controller
      */
     public function create()
     {
-        return view('instagram_acount_management.create');
+        return view('instagram_account_management.create');
     }
 
     /**
@@ -41,7 +41,7 @@ class InstagramAcountController extends Controller
     {
         $model->create($request->merge(['password' => Hash::make($request->get('password'))])->all());
 
-        return redirect()->route('instagram_acount_management.index')->withStatus(__('User successfully created.'));
+        return redirect()->route('instagram_account_management.index')->withStatus(__('User successfully created.'));
     }
 
     /**
@@ -52,7 +52,7 @@ class InstagramAcountController extends Controller
      */
     public function edit(InstagramAccount $account)
     {
-        return view('instagram_acount_management.edit', compact('account'));
+        return view('instagram_account_management.edit', compact('account'));
     }
 
     /**
@@ -69,7 +69,7 @@ class InstagramAcountController extends Controller
                 ->except([$request->get('password') ? '' : 'password']
         ));
 
-        return redirect()->route('instagram_acount_management.index')->withStatus(__('User successfully updated.'));
+        return redirect()->route('instagram_account_management.index')->withStatus(__('User successfully updated.'));
     }
 
     /**
@@ -82,6 +82,6 @@ class InstagramAcountController extends Controller
     {
         $account->delete();
 
-        return redirect()->route('instagram_acount_management.index')->withStatus(__('User successfully deleted.'));
+        return redirect()->route('instagram_account_management.index')->withStatus(__('User successfully deleted.'));
     }
 }
