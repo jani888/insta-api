@@ -8,6 +8,17 @@
         <a class="navbar-brand pt-0" href="{{ route('dashboard') }}">
             <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
         </a>
+        <!-- Account selector -->
+        <div class="form-group col-xs-12 mb-0">
+            <form action="{{route('account_selector.select')}}" method="post">
+                @csrf
+                <select class="form-control" name="account" onchange="this.form.submit()">
+                    @foreach(auth()->user()->accounts as $account)
+                        <option value="{{$account->id}}" @if($account->id == session('account.id')) selected @endif>{{$account->username}}</option>
+                    @endforeach
+                </select>
+            </form>
+        </div>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown">

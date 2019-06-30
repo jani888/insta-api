@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/schedule', 'ScheduleController@enqueue');
 
+    Route::post('/account_selector', 'AccountSelectorController@set')->name('account_selector.select');
+
     Route::resource('user', 'UserController', ['except' => ['show']]);
 
 	Route::resource('accounts', 'InstagramAcountController', ['name' => 'accounts.create', 'except' => ['show']]);

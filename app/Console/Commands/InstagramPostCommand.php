@@ -38,10 +38,9 @@ class InstagramPostCommand extends Command {
      *
      * @param InstagramPublishingApi $publishingApi
      *
-     * @return mixed
      */
     public function handle() {
-        $posts = PostSchedule::with(['post', 'post.account'])->where('post_at', '<', Carbon::now())->get();
+        $posts = PostSchedule::with(['post', 'post.account'])->shouldPost()->get();
         $posts->each(function ($post){
             InstagramPublishPost::dispatch($post);
         });

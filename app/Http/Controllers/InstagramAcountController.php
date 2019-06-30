@@ -15,9 +15,9 @@ class InstagramAcountController extends Controller
      * @param  \App\User  $model
      * @return \Illuminate\View\View
      */
-    public function index(InstagramAccount $model)
+    public function index()
     {
-        return view('instagram_account_management.index', ['accounts' => $model->paginate(15)]);
+        return view('instagram_account_management.index', ['accounts' => auth()->user()->accounts()->paginate(15)]);
     }
 
     /**

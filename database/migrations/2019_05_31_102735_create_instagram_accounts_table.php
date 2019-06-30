@@ -18,6 +18,7 @@ class CreateInstagramAccountsTable extends Migration
             $table->string('username');
             $table->string('full_name');
             $table->string('password')->nullable();
+            $table->unsignedInteger('followers')->nullable();
             $table->timestamps();
         });
     }

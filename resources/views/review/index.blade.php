@@ -24,6 +24,11 @@
                     <div class="card shadow">
                         <div class="card-body">
                             <p>
+                                <b>
+                                    {{implode($foundBy->pluck('name')->toArray())}}
+                                </b>
+                            </p>
+                            <p>
                                 <i class="fa fa-user text-primary"></i>
                                 {{$post->account->full_name ?? '-'}} ({{$post->account->username ?? '-'}})
                             </p>
@@ -32,7 +37,7 @@
                                 {{$post->likes}}
                             </p>
                             <p class="text-muted">
-                                {{$post->description}}
+                                {!! $post->description !!}
                             </p>
                             <hr>
                             <form action="schedule" method="post">
@@ -40,15 +45,19 @@
                                 <input type="hidden" name="post_id" value="{{$post->id}}">
                                 <textarea class="form-control form-control" rows="3" placeholder="Post description ..." name="description">{{$description}}</textarea>
 
-                                <div class="text-right">
-                                    <div>
-                                        <button class="btn btn-primary mt-3">
-                                            <i class="fas fa-share"></i>
-                                            Enqueue
-                                        </button>
+                                <div class="row mt-3">
+                                    <div class="col">
+                                        <div>
+                                            <a href="review/{{$post->id}}/reject" class="btn btn-outline-danger btn-sm"><i class="fa fa-times"></i> Reject</a>
+                                        </div>
                                     </div>
-                                    <div class="mt-2">
-                                        <a href="review/{{$post->id}}/reject" class="btn btn-outline-danger"><i class="fa fa-times"></i> Reject</a>
+                                    <div class="col text-right">
+                                        <div>
+                                            <button class="btn btn-primary btn-sm">
+                                                <i class="fas fa-share"></i>
+                                                Enqueue
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </form>

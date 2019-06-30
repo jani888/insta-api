@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Jobs\InstagramCrawlHashtag;
+use App\Models\Hashtag;
 use Illuminate\Console\Command;
 
 class InstagramUpdateCommand extends Command
@@ -12,7 +13,7 @@ class InstagramUpdateCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'instagram:update {hashtags*}';
+    protected $signature = 'instagram:update';
 
     /**
      * The console command description.
@@ -38,7 +39,7 @@ class InstagramUpdateCommand extends Command
      */
     public function handle()
     {
-        $hashtags = collect($this->argument('hashtags'));
+        $hashtags = Hashtag::pluck('name');
         $hashtags->each(function ($hashtag){
             $this->info("Updating {$hashtag}...");
             dispatch_now(new InstagramCrawlHashtag($hashtag));

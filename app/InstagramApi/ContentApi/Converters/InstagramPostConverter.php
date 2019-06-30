@@ -46,7 +46,8 @@ class InstagramPostConverter {
             'instagram_account_id' => $this->instagramAccountConverter->convert($page->getOwner())->id,
         ]);
         $this->getImage($post, $post->img_src);
-		$this->hashtagParser->parse($post);
+		$hashtags = $this->hashtagParser->parse($post);
+		$post->hashtags()->sync($hashtags);
         return $post;
     }
 

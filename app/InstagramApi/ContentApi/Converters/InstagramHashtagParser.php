@@ -9,6 +9,7 @@
 namespace App\InstagramApi\ContentApi\Converters;
 
 
+use App\Models\Hashtag;
 use App\Models\InstagramPost;
 use Illuminate\Support\Collection;
 
@@ -20,6 +21,12 @@ class InstagramHashtagParser {
         $hashtags->transform(function($hashtag){
             $endstr = strpos($hashtag, " ");
             return substr($hashtag, 0, $endstr ? $endstr : strlen($hashtag));
+        });
+        
+        return $hashtags->map(function ($hashtag){
+            return Hashtag::firstOrCreate([
+                'name' => $hashtag
+            ])->id;
         });
     }
 }

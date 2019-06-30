@@ -11,4 +11,8 @@ class InstagramPost extends Model
     public function account() {
         return $this->belongsTo(InstagramAccount::class, 'instagram_account_id', 'id');
     }
+
+    public function hashtags() {
+        return $this->belongsToMany(Hashtag::class);
+    }
 }
