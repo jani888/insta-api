@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\InstagramApi\ContentApi\InstagramContentApi;
+use App\InstagramApi\ContentApi\InstagramCrawler;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -29,7 +30,7 @@ class InstagramCrawlHashtag implements ShouldQueue
     /**
      * Execute the job.
      *
-     * @param InstagramContentApi $contentApi
+     * @param InstagramCrawler $contentApi
      *
      * @return void
      */

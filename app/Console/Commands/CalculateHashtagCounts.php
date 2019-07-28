@@ -4,25 +4,26 @@ namespace App\Console\Commands;
 
 use App\InstagramApi\PublishingApi\InstagramPublishingApi;
 use App\Jobs\InstagramPublishPost;
+use App\Models\Hashtag;
 use App\Models\PostSchedule;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class InstagramPostCommand extends Command {
+class CalculateHashtagCounts extends Command {
 
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'instagram:post';
+    protected $signature = 'hashtags:calculate_counts';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Post all scheduled a posts';
+    protected $description = 'Update the counts for all hashtags';
 
     /**
      * Create a new command instance.
@@ -40,10 +41,8 @@ class InstagramPostCommand extends Command {
      *
      */
     public function handle() {
-        $posts = PostSchedule::with(['post', 'post.account'])->shouldPost()->get();
-        $posts->each(function ($post){
-            dump($post->description);
-            InstagramPublishPost::dispatch($post);
+        Hashtag::with('posts')->each(function ($hashtag){
+            $hashtag->update(['count' => $hashtag->posts->count()]);
         });
     }
 }

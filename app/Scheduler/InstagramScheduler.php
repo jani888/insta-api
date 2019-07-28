@@ -16,7 +16,7 @@ use Carbon\Carbon;
 class InstagramScheduler {
 
     public function enqueue(Post $post) {
-        PostSchedule::create([
+        return PostSchedule::create([
             'post_at' => $this->nextTimeframe($post->instagram_account_id),
             'post_id' => $post->id,
         ]);

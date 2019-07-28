@@ -22,6 +22,7 @@ class InstagramCrawlPostDetails implements ShouldQueue
      * Create a new job instance.
      *
      * @param $shortcode
+     * @param $foundByHashtag
      */
     public function __construct($shortcode)
     {
@@ -39,6 +40,6 @@ class InstagramCrawlPostDetails implements ShouldQueue
      */
     public function handle(InstagramPostConverter $postConverter, InstagramCrawler $crawler)
     {
-        $post = $postConverter->convert($crawler->post($this->shortcode));
+        $postConverter->convert($crawler->post($this->shortcode));
     }
 }

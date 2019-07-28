@@ -22,11 +22,12 @@ class InstagramHashtagParser {
             $endstr = strpos($hashtag, " ");
             return substr($hashtag, 0, $endstr ? $endstr : strlen($hashtag));
         });
-        
+
         return $hashtags->map(function ($hashtag){
-            return Hashtag::firstOrCreate([
+            $hashtag = Hashtag::firstOrCreate([
                 'name' => $hashtag
-            ])->id;
+            ]);
+            return $hashtag->id;
         });
     }
 }
