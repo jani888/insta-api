@@ -9,8 +9,10 @@
 namespace App\InstagramApi\ContentApi;
 
 
+use App\InstagramApi\ContentApi\Pages\InstagramAccountPage;
 use App\InstagramApi\ContentApi\Pages\InstagramExplorePage;
 use App\InstagramApi\ContentApi\Pages\InstagramPostPage;
+use App\Models\InstagramAccount;
 use GuzzleHttp\Client;
 
 class InstagramCrawler {
@@ -56,5 +58,15 @@ class InstagramCrawler {
 
     private function parseExplore(string $html): InstagramExplorePage {
         return new InstagramExplorePage($this->getSharedData($html));
+    }
+
+    public function account(InstagramAccount $account) {
+        $html = $this->client->get(self::BASE_URL . $account->username)->getBody()->getContents();
+        $page = $this->parseAccount($html);
+        return $page;
+    }
+
+    private function parseAccount(string $html): InstagramAccountPage{
+        return new InstagramAccountPage($this->getSharedData($html));
     }
 }

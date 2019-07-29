@@ -2,25 +2,27 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\InstagramCrawlAccountStats;
 use App\Jobs\InstagramCrawlHashtag;
 use App\Models\Hashtag;
+use App\Models\InstagramAccount;
 use Illuminate\Console\Command;
 
-class InstagramUpdateCommand extends Command
+class InstagramUpdateStatsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'instagram:update';
+    protected $signature = 'instagram:stats';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Update all hashtags';
+    protected $description = 'Update account statistics';
 
     /**
      * Create a new command instance.
@@ -39,11 +41,10 @@ class InstagramUpdateCommand extends Command
      */
     public function handle()
     {
-        $hashtags = Hashtag::pluck('name');
-        $hashtags->each(function ($hashtag){
-            $this->info("Updating {$hashtag}...");
+        InstagramAccount::each(function ($account){
+            $this->info("Updating {$account->username}...");
             try{
-                dispatch_now(new InstagramCrawlHashtag($hashtag));
+                dispatch_now(new InstagramCrawlAccountStats($account));
             } catch (\Exception $e){
                 $this->warn($e->getMessage());
             }

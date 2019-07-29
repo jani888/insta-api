@@ -25,6 +25,6 @@ class PostSchedule extends Model
     }
 
     public function scopeShouldPost($query) {
-        $query->where('post_at', '<=', Carbon::now())->where('attempts', '<=', self::MAX_ATTEMPTS);
+        $query->where('post_at', '<=', Carbon::now())->where('attempts', '<=', self::MAX_ATTEMPTS)->whereNull('posted_at');
     }
 }

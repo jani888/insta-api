@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Scheduler\InstagramScheduler;
+use Carbon\CarbonInterface;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller {
@@ -20,9 +21,10 @@ class ScheduleController extends Controller {
             'description'       => $request->description,
         ]);
 
-        $scheduler->enqueue($post);
+        $scheduled = $scheduler->enqueue($post);
 
         session()->flash('status', 'success');
+        session()->flash('post_at', $scheduled->post_at->diffForHumans(null, CarbonInterface::DIFF_RELATIVE_AUTO, false, 2));
 
         return back();
     }
