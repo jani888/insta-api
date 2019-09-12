@@ -828,8 +828,7 @@ var Charts = (function() {
 		var $target = $(elem.data('target'));
 		var $chart = $target.data('chart');
 
-		// Parse options
-		parseOptions($chart, options);
+		$chart.data = options.data;
 
 		// Toggle ticks
 		toggleTicks(elem, $chart);
@@ -996,7 +995,7 @@ var SalesChart = (function() {
 
 	// Variables
 
-	var $chart = $('#chart-sales');
+	var $chart = $('#chart-followers');
 
 
 	// Methods
@@ -1015,7 +1014,7 @@ var SalesChart = (function() {
 						ticks: {
 							callback: function(value) {
 								if (!(value % 10)) {
-									return '$' + value + 'k';
+									return value.toLocaleString()
 								}
 							}
 						}
@@ -1032,17 +1031,17 @@ var SalesChart = (function() {
 								content += '<span class="popover-body-label mr-auto">' + label + '</span>';
 							}
 
-							content += '<span class="popover-body-value">$' + yLabel + 'k</span>';
+							content += '<span class="popover-body-value">' + yLabel.toLocaleString() + '</span>';
 							return content;
 						}
 					}
 				}
 			},
 			data: {
-				labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				labels: window.followersChart.labels,
 				datasets: [{
-					label: 'Performance',
-					data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
+					label: 'Followers',
+					data: window.followersChart.series
 				}]
 			}
 		});

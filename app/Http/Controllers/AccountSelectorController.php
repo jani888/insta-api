@@ -10,7 +10,7 @@ class AccountSelectorController extends Controller
 
     public function set(Request $request) {
         abort_unless(auth()->user()->accounts->contains('id', $request->account), 404);
-        session(['account' => InstagramAccount::find($request->account)]);
+        auth()->user()->update(['current_account_id' => $request->account]);
         return back();
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\InstagramApi\ContentApi\InstagramCrawler;
+use App\Models\InstagramFollower;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -34,6 +35,6 @@ class InstagramCrawlAccountStats implements ShouldQueue {
      */
     public function handle(InstagramCrawler $crawler) {
         $account = $crawler->account($this->account);
-        $this->account->update(['followers' => $account->followers()]);
+        $this->account->followers()->save(new InstagramFollower(['value' => $account->followers()]));
     }
 }

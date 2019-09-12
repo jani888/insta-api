@@ -16,7 +16,7 @@ class PostSchedule extends Model
 
     const UPDATED_AT = null;
 
-    protected $casts = [
+    protected $dates = [
         'post_at'
     ];
 

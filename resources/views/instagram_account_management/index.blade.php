@@ -42,7 +42,7 @@
                                 @foreach ($accounts as $account)
                                     <tr>
                                         <td>{{ $account->full_name }} ({{$account->username}})</td>
-                                        <td>{{ $account->followers }}</td>
+                                        <td>{{ $account->followersFormatted }}</td>
                                         <td class="text-right">
                                             <a class="btn-lg" href="/accounts/{{ $account->id }}/edit"><i class="fas fa-cogs"></i></a>
                                         </td>

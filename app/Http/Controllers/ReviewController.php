@@ -31,19 +31,14 @@ class ReviewController extends Controller {
         $scheduled = Post::where('instagram_account_id', auth()->user()->currentAccount->id)->get()->pluck('instagram_post_id');
         $rejected = RejectedPost::where('instagram_account_id', auth()->user()->currentAccount->id)->get()->pluck('instagram_post_id');
 
-        $posts = InstagramPost::with([
-            'account',
-            'hashtags' => function ($query) use ($hashtags) {
-                $query->whereIn('hashtags.id', $hashtags);
-            },
-            'hashtags',
-        ])->whereNotIn('id', $scheduled)->whereNotIn('id', $rejected)->get();
-
-        $posts = $posts->sortByDesc(function ($post){
-            return $post->hashtags->average('count');
+        $posts = auth()->user()->currentAccount->hashtags()->with('posts')->get()->flatMap(function ($hashtag) {
+            return $hashtag->posts;
+        });
+        $posts = $posts->reject(function ($post) use ($scheduled, $rejected) {
+            return $scheduled->contains($post->id) || $rejected->contains($post->id);
         });
 
-        $post = $posts->first();
+        $post = $posts->random();
 
         $foundBy = $hashtags->filter(function ($hashtag) use ($post) {
             return in_array($hashtag, $post->hashtags->map(function ($hashtag) {
@@ -60,7 +55,7 @@ class ReviewController extends Controller {
     public function reject(InstagramPost $post) {
         RejectedPost::create([
             'instagram_post_id'    => $post->id,
-            'instagram_account_id' => auth()->user()->accounts->first()->id,
+            'instagram_account_id' => auth()->user()->currentAccount->id
         ]);
         return back();
     }

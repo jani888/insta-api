@@ -23,8 +23,14 @@ class InstagramScheduler {
     }
 
     private function nextTimeframe($instagram_account_id) {
-        return Carbon::parse(PostSchedule::with(['post' => function ($q) use ($instagram_account_id){
+        $latestPostDate = Carbon::parse( PostSchedule::whereHas('post', function ($q) use ($instagram_account_id){
             return $q->where('instagram_account_id', $instagram_account_id);
-        }])->max('post_at'))->addMinutes(30);
+        })->max('post_at'));
+
+        if($latestPostDate->isPast()){
+            $latestPostDate = Carbon::now();
+        }
+
+        return $latestPostDate->addMinutes(20);
     }
 }

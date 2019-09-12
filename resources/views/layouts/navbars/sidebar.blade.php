@@ -14,7 +14,7 @@
                 @csrf
                 <select class="form-control" name="account" onchange="this.form.submit()">
                     @foreach(auth()->user()->accounts as $account)
-                        <option value="{{$account->id}}" @if($account->id == session('account.id')) selected @endif>{{$account->username}}</option>
+                        <option value="{{$account->id}}" @if($account->id == auth()->user()->currentAccount->id) selected @endif>{{$account->username}}</option>
                     @endforeach
                 </select>
             </form>
@@ -95,7 +95,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
+                    <a class="nav-link" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
                         <i class="fab fa-laravel" style="color: #f4645f;"></i>
                         <span class="nav-link-text" style="color: #f4645f;">{{ __('Laravel Examples') }}</span>
                     </a>
@@ -117,12 +117,12 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
+                    <a class="nav-link {{Request::is('schedule') ? 'active' : ''}}" href="{{route('schedule')}}">
+                        <i class="ni ni-planet text-blue"></i> {{ __('sidebar.schedule') }}
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('review')}}">
+                    <a class="nav-link {{Request::is('review') ? 'active' : ''}}" href="{{route('review')}}">
                         <i class="ni ni-pin-3 text-orange"></i> {{ __('sidebar.review') }}
                     </a>
                 </li>

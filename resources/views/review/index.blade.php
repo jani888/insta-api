@@ -49,7 +49,7 @@
                             <form action="schedule" method="post">
                                 @csrf
                                 <input type="hidden" name="post_id" value="{{$post->id}}">
-                                <textarea class="form-control form-control" rows="3" placeholder="Post description ..." name="description">{{$description}}</textarea>
+                                <textarea class="form-control form-control" rows="15" placeholder="Post description ..." name="description">{{$description}}</textarea>
 
                                 <div class="row mt-3">
                                     <div class="col">

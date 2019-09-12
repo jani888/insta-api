@@ -42,7 +42,6 @@ class InstagramPostCommand extends Command {
     public function handle() {
         $posts = PostSchedule::with(['post', 'post.account'])->shouldPost()->get();
         $posts->each(function ($post){
-            dump($post->description);
             InstagramPublishPost::dispatch($post);
         });
     }

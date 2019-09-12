@@ -11,4 +11,12 @@ class Post extends Model
     public function account(){
         return $this->belongsTo(InstagramAccount::class, 'instagram_account_id', 'id');
     }
+
+    public function schedule() {
+        return $this->hasOne(PostSchedule::class);
+    }
+
+    public function instagramPost() {
+        return $this->belongsTo(InstagramPost::class);
+    }
 }

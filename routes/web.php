@@ -24,7 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/review/{post}/reject', 'ReviewController@reject');
 
-    Route::post('/schedule', 'ScheduleController@enqueue');
+    Route::get('/schedule', 'ScheduleController@index')->name('schedule');
+    Route::post('/schedule', 'ScheduleController@store');
 
     Route::post('/account_selector', 'AccountSelectorController@set')->name('account_selector.select');
 

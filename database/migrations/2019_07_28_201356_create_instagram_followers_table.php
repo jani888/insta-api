@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInstagramAccountsTable extends Migration
+class CreateInstagramFollowersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateInstagramAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('instagram_accounts', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
-            $table->string('username');
-            $table->string('full_name');
-            $table->string('password')->nullable();
+        Schema::create('instagram_followers', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('instagram_account_id');
+            $table->integer('value');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateInstagramAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('instagram_accounts');
+        Schema::dropIfExists('instagram_followers');
     }
 }

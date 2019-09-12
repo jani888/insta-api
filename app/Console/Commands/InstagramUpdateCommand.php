@@ -39,11 +39,11 @@ class InstagramUpdateCommand extends Command
      */
     public function handle()
     {
-        $hashtags = Hashtag::pluck('name');
+        $hashtags = Hashtag::latest()->pluck('name');
         $hashtags->each(function ($hashtag){
             $this->info("Updating {$hashtag}...");
             try{
-                dispatch_now(new InstagramCrawlHashtag($hashtag));
+                dispatch(new InstagramCrawlHashtag($hashtag));
             } catch (\Exception $e){
                 $this->warn($e->getMessage());
             }

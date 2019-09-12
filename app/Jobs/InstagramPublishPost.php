@@ -46,7 +46,7 @@ class InstagramPublishPost implements ShouldQueue {
         try {
             $this->scheduled->posted_at = Carbon::now();
             $this->scheduled->save();
-            $publishingApi->authenticate($username, $password)->post(sprintf("post_image_data/%s.jpg", $this->scheduled->post->id), $this->scheduled->description);
+            $publishingApi->authenticate($username, $password)->post(sprintf("post_image_data/%s.jpg", $this->scheduled->post->instagramPost->id), $this->scheduled->post->description);
         } catch (\Exception $e) {
             Log::warning("[PUBLISHING SCHEDULE] Instagram API error.", [
                 'error' => $e->getMessage(),
