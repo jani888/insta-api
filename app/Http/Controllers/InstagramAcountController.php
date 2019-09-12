@@ -55,6 +55,10 @@ class InstagramAcountController extends Controller
         return view('instagram_account_management.edit', compact('account'));
     }
 
+    public function hashtags(UserRequest $request, InstagramAccount $account){
+        return view('welcome');
+    }
+
     /**
      * Update the specified user in storage
      *

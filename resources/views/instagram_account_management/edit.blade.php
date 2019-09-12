@@ -65,7 +65,7 @@
         <div class="modal fade" id="addHashtagModal" tabindex="-1" role="dialog" aria-labelledby="modal-default" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
                 <div class="modal-content">
-                    <form action="/hashtags" method="post">
+                    <form action="{{ route('account.hashtag') }}" method="post">
                         @csrf
                         <div class="modal-header">
                             <h3 class="modal-title" id="modal-title-default">Add hashtag</h3>
